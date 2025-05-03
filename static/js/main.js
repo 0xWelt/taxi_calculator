@@ -7,6 +7,7 @@
 
 let map;
 let control;
+const MAX_LOG_ENTRIES = 10; // 最大日志条目数
 
 /**
  * 日志显示函数
@@ -18,7 +19,16 @@ function logMessage(message, type = 'info') {
     const logEntry = document.createElement('div');
     logEntry.className = `log-entry ${type}`;
     logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+    
+    // 添加新日志条目
     logContainer.appendChild(logEntry);
+    
+    // 如果超过最大条目数，移除最旧的条目
+    while (logContainer.children.length > MAX_LOG_ENTRIES) {
+        logContainer.removeChild(logContainer.firstChild);
+    }
+    
+    // 滚动到底部
     logContainer.scrollTop = logContainer.scrollHeight;
 }
 

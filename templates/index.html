@@ -22,48 +22,57 @@
 
         <!-- 主要内容区域 -->
         <div class="main-content">
-            <!-- 左侧面板：搜索和结果 -->
+            <!-- 左侧面板：搜索、计算和地图 -->
             <div class="left-panel">
-                <!-- 搜索区域 -->
-                <div class="search-container">
-                    <div class="input-group">
-                        <label for="start">起点：</label>
-                        <input type="text" id="start" placeholder="输入起点位置">
+                <!-- 顶部信息区域 -->
+                <div class="top-info">
+                    <!-- 搜索区域 -->
+                    <div class="search-container">
+                        <div class="search-header">
+                            <h2>路线查询</h2>
+                            <div class="help-button">
+                                <span>使用帮助</span>
+                                <div class="tooltip">
+                                    <ul>
+                                        <li>输入起点和终点位置，支持中文、日文和英文</li>
+                                        <li>点击"计算费用"按钮开始计算</li>
+                                        <li>地图将显示路线，右侧显示详细费用</li>
+                                        <li>费用计算基于东京出租车标准</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="start">起点：</label>
+                            <input type="text" id="start" placeholder="输入起点位置">
+                        </div>
+                        <div class="input-group">
+                            <label for="end">终点：</label>
+                            <input type="text" id="end" placeholder="输入终点位置">
+                        </div>
+                        <button id="calculate">计算费用</button>
                     </div>
-                    <div class="input-group">
-                        <label for="end">终点：</label>
-                        <input type="text" id="end" placeholder="输入终点位置">
+
+                    <!-- 结果区域 -->
+                    <div class="result-container">
+                        <h2>计算结果</h2>
+                        <div class="result-item">
+                            <span>距离：</span>
+                            <span id="distance">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span>时间：</span>
+                            <span id="duration">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span>费用：</span>
+                            <span id="fare">-</span>
+                        </div>
                     </div>
-                    <button id="calculate">计算费用</button>
                 </div>
 
-                <!-- 结果区域 -->
-                <div class="result-container">
-                    <h2>计算结果</h2>
-                    <div class="result-item">
-                        <span>距离：</span>
-                        <span id="distance">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span>时间：</span>
-                        <span id="duration">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span>费用：</span>
-                        <span id="fare">-</span>
-                    </div>
-                </div>
-
-                <!-- 使用提示 -->
-                <div class="tips">
-                    <h2>使用提示</h2>
-                    <ul>
-                        <li>输入起点和终点位置，支持中文、日文和英文</li>
-                        <li>点击"计算费用"按钮开始计算</li>
-                        <li>地图将显示路线，右侧显示详细费用</li>
-                        <li>费用计算基于东京出租车标准</li>
-                    </ul>
-                </div>
+                <!-- 地图区域 -->
+                <div id="map"></div>
             </div>
 
             <!-- 右侧面板：操作日志 -->
@@ -72,9 +81,6 @@
                 <div id="log" class="log-container"></div>
             </div>
         </div>
-
-        <!-- 地图区域 -->
-        <div id="map"></div>
     </div>
 
     <!-- 引入自定义脚本 -->
