@@ -4,43 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日本打车费用计算器</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <!-- 引入 Leaflet.js 地图库 -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- 引入 Leaflet Routing Machine 用于路线规划 -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <!-- 引入自定义样式 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>日本打车费用计算器</h1>
-        <div class="search-container">
-            <div class="input-group">
-                <label for="start">起点：</label>
-                <input type="text" id="start" placeholder="输入起点（例如：东京站）">
+        <!-- 页面标题 -->
+        <header>
+            <h1>日本打车费用计算器</h1>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <div class="main-content">
+            <!-- 左侧面板：搜索和结果 -->
+            <div class="left-panel">
+                <!-- 搜索区域 -->
+                <div class="search-container">
+                    <div class="input-group">
+                        <label for="start">起点：</label>
+                        <input type="text" id="start" placeholder="输入起点位置">
+                    </div>
+                    <div class="input-group">
+                        <label for="end">终点：</label>
+                        <input type="text" id="end" placeholder="输入终点位置">
+                    </div>
+                    <button id="calculate">计算费用</button>
+                </div>
+
+                <!-- 结果区域 -->
+                <div class="result-container">
+                    <h2>计算结果</h2>
+                    <div class="result-item">
+                        <span>距离：</span>
+                        <span id="distance">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>时间：</span>
+                        <span id="duration">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>费用：</span>
+                        <span id="fare">-</span>
+                    </div>
+                </div>
+
+                <!-- 使用提示 -->
+                <div class="tips">
+                    <h2>使用提示</h2>
+                    <ul>
+                        <li>输入起点和终点位置，支持中文、日文和英文</li>
+                        <li>点击"计算费用"按钮开始计算</li>
+                        <li>地图将显示路线，右侧显示详细费用</li>
+                        <li>费用计算基于东京出租车标准</li>
+                    </ul>
+                </div>
             </div>
-            <div class="input-group">
-                <label for="end">终点：</label>
-                <input type="text" id="end" placeholder="输入终点（例如：涩谷站）">
-            </div>
-            <button id="calculate">计算费用</button>
-            <div class="tips">
-                <p class="tip">使用提示：</p>
-                <ul>
-                    <li>请输入日本境内的具体地点名称</li>
-                    <li>建议使用日语或英语输入地点名称</li>
-                    <li>例如：东京站、涩谷站、新宿站等</li>
-                    <li>如果找不到地点，请尝试使用更具体的位置描述</li>
-                </ul>
+
+            <!-- 右侧面板：操作日志 -->
+            <div class="right-panel">
+                <h2>操作日志</h2>
+                <div id="log" class="log-container"></div>
             </div>
         </div>
+
+        <!-- 地图区域 -->
         <div id="map"></div>
-        <div id="result" class="result-container">
-            <h2>费用详情</h2>
-            <p>距离：<span id="distance">0</span> 公里</p>
-            <p>预计时间：<span id="duration">0</span> 分钟</p>
-            <p>预计费用：<span id="fare">0</span> 日元</p>
-        </div>
     </div>
+
+    <!-- 引入自定义脚本 -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html> 
