@@ -1,6 +1,27 @@
 # 日本打车费用计算器
 
+[![Python Version](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![uv](https://img.shields.io/badge/package%20manager-uv-blue)](https://github.com/astral-sh/uv)
+[![Generated with Cursor](https://img.shields.io/badge/generated%20with-Cursor-blue)](https://cursor.sh)
+
 这是一个基于 Web 的日本打车费用计算应用，具有交互式地图界面，可以计算任意两点之间的打车费用。
+
+> **特别说明**：本项目完全由 [Cursor](https://cursor.sh) 通过 vibe coding 生成，没有手写任何一行代码。这展示了 AI 辅助编程的强大能力。
+
+## 目录
+
+- [功能特点](#功能特点)
+- [技术栈](#技术栈)
+- [安装步骤](#安装步骤)
+- [使用说明](#使用说明)
+- [费用计算规则](#费用计算规则)
+- [注意事项](#注意事项)
+- [界面说明](#界面说明)
+- [开发说明](#开发说明)
+- [贡献指南](#贡献指南)
+- [安全策略](#安全策略)
+- [许可证](#许可证)
 
 ## 功能特点
 
@@ -102,4 +123,16 @@
 - 使用 OSRM 的演示服务器进行路线规划
 - 地点搜索使用防抖处理，延迟300毫秒
 - 搜索结果按重要性排序，最多显示5个结果
-- 所有 API 调用都有错误处理和用户提示 
+- 所有 API 调用都有错误处理和用户提示
+
+## 贡献指南
+
+请查看 [CONTRIBUTING.md](CONTRIBUTING.md) 了解如何为项目做出贡献。
+
+## 安全策略
+
+请查看 [SECURITY.md](SECURITY.md) 了解项目的安全策略。
+
+## 许可证
+
+本项目采用 MIT 许可证 - 详情请参阅 [LICENSE](LICENSE) 文件。 
