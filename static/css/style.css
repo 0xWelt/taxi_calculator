@@ -89,6 +89,7 @@ header {
 
 .input-group {
     margin-bottom: 15px;
+    position: relative;
 }
 
 .input-group label {
@@ -103,6 +104,34 @@ header {
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
+}
+
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.suggestion-item {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background-color: #f5f5f5;
 }
 
 /* 按钮样式 */
@@ -238,9 +267,4 @@ button:hover {
 .log-entry.success {
     background-color: #e8f5e9;
     color: #2e7d32;
-}
-
-.log-entry.error {
-    background-color: #ffebee;
-    color: #c62828;
 } 

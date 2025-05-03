@@ -180,5 +180,103 @@ function calculateRoute() {
     });
 }
 
+/**
+ * 防抖函数
+ * @param {Function} func - 要执行的函数
+ * @param {number} wait - 等待时间（毫秒）
+ * @returns {Function} - 防抖后的函数
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+/**
+ * 搜索地点建议
+ * @param {string} query - 搜索关键词
+ * @returns {Promise<Array>} - 地点建议列表
+ */
+async function searchLocations(query) {
+    if (!query) return [];
+    
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=jp&limit=10`;
+    
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        // 对结果进行排序和过滤
+        return data
+            .map(item => ({
+                display_name: item.display_name,
+                lat: parseFloat(item.lat),
+                lng: parseFloat(item.lon),
+                importance: parseFloat(item.importance) || 0
+            }))
+            .sort((a, b) => b.importance - a.importance)
+            .slice(0, 5);
+    } catch (error) {
+        logMessage(`搜索地点错误: ${error.message}`, 'error');
+        return [];
+    }
+}
+
+/**
+ * 显示地点建议
+ * @param {string} inputId - 输入框ID
+ * @param {Array} suggestions - 建议列表
+ */
+function showSuggestions(inputId, suggestions) {
+    const suggestionsContainer = document.getElementById(`${inputId}-suggestions`);
+    suggestionsContainer.innerHTML = '';
+    
+    if (suggestions.length === 0) {
+        suggestionsContainer.style.display = 'none';
+        return;
+    }
+    
+    suggestions.forEach(suggestion => {
+        const div = document.createElement('div');
+        div.className = 'suggestion-item';
+        div.textContent = suggestion.display_name;
+        div.onclick = () => {
+            document.getElementById(inputId).value = suggestion.display_name;
+            suggestionsContainer.style.display = 'none';
+        };
+        suggestionsContainer.appendChild(div);
+    });
+    
+    suggestionsContainer.style.display = 'block';
+}
+
+// 添加输入框事件监听，使用防抖
+const debouncedSearch = debounce(async (e, inputId) => {
+    const suggestions = await searchLocations(e.target.value);
+    showSuggestions(inputId, suggestions);
+}, 300);
+
+document.getElementById('start').addEventListener('input', (e) => {
+    debouncedSearch(e, 'start');
+});
+
+document.getElementById('end').addEventListener('input', (e) => {
+    debouncedSearch(e, 'end');
+});
+
+// 点击其他地方时隐藏建议
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.input-group')) {
+        document.getElementById('start-suggestions').style.display = 'none';
+        document.getElementById('end-suggestions').style.display = 'none';
+    }
+});
+
 // 初始化地图
 document.addEventListener('DOMContentLoaded', initMap); 
