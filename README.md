@@ -1,5 +1,7 @@
 # 日本打车费用计算器
 
+<div align="center">
+
 ![应用界面截图](static/images/screenshot1.png)
 
 [![Python Version](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/downloads/)
@@ -7,45 +9,29 @@
 [![uv](https://img.shields.io/badge/package%20manager-uv-blue)](https://github.com/astral-sh/uv)
 [![Generated with Cursor](https://img.shields.io/badge/generated%20with-Cursor-blue)](https://cursor.sh)
 
+</div>
+
+## 项目简介
+
 这是一个基于 Web 的日本打车费用计算应用，具有交互式地图界面，可以计算任意两点之间的打车费用。
 
 > **特别说明**：本项目完全由 [Cursor](https://cursor.sh) 通过 vibe coding 生成，没有手写任何一行代码。这展示了 AI 辅助编程的强大能力。
 
-## 目录
+## 快速开始
 
-- [功能特点](#功能特点)
-- [技术栈](#技术栈)
-- [安装步骤](#安装步骤)
-- [使用说明](#使用说明)
-- [费用计算规则](#费用计算规则)
-- [注意事项](#注意事项)
-- [界面说明](#界面说明)
-- [开发说明](#开发说明)
-- [贡献指南](#贡献指南)
-- [安全策略](#安全策略)
-- [许可证](#许可证)
+### 一键部署
 
-## 功能特点
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone)
 
-- 交互式地图界面（基于 OpenStreetMap）
-- 实时操作日志显示
-- 地点自动搜索和模糊匹配（限制在日本境内）
-- 实时路线显示
-- 费用计算（基于距离和时间）
-- 响应式设计
-- 直观的用户界面
-- 智能地点推荐（支持中文、日文和英文输入）
+1. 点击上方的 "Deploy with Vercel" 按钮
+2. 登录您的 Vercel 账户（如果没有，需要先注册）
+3. 选择您的 GitHub 账户
+4. 选择要部署的仓库（Fork 后的仓库）
+5. 点击 "Deploy" 按钮
 
-## 技术栈
+部署完成后，Vercel 会自动为您提供一个域名，您可以通过这个域名访问您的应用。
 
-- 后端：Python Flask
-- 前端：HTML, CSS, JavaScript
-- 地图服务：OpenStreetMap + Leaflet.js
-- 路线规划：OSRM（Open Source Routing Machine）
-- 地理编码：Nominatim
-- 包管理：uv
-
-## 安装步骤
+### 本地开发
 
 1. 克隆项目到本地
 2. 安装 uv（如果尚未安装）：
@@ -72,6 +58,33 @@
    python app.py
    ```
 
+## 功能特点
+
+- 🗺️ 交互式地图界面（基于 OpenStreetMap）
+- 📝 实时操作日志显示
+- 🔍 地点自动搜索和模糊匹配（限制在日本境内）
+- 🛣️ 实时路线显示
+- 💰 费用计算（基于距离和时间）
+- 📱 响应式设计
+- 🎯 直观的用户界面
+- 🌐 智能地点推荐（支持中文、日文和英文输入）
+
+## 费用计算规则
+
+- 基础费用：410 日元（1.052 公里以内）
+- 后续每 237 米加收 80 日元
+- 等待时间费用：每 1 分 45 秒加收 80 日元
+- 夜间附加费（22:00-05:00）：20%
+
+## 技术栈
+
+- 后端：Python Flask
+- 前端：HTML, CSS, JavaScript
+- 地图服务：OpenStreetMap + Leaflet.js
+- 路线规划：OSRM（Open Source Routing Machine）
+- 地理编码：Nominatim
+- 包管理：uv
+
 ## 使用说明
 
 1. 在起点和终点输入框中输入或选择地点
@@ -90,13 +103,6 @@
    - 地图上显示路线
    - 显示距离、时间和费用信息
    - 右侧面板显示详细的操作日志
-
-## 费用计算规则
-
-- 基础费用：410 日元（1.052 公里以内）
-- 后续每 237 米加收 80 日元
-- 等待时间费用：每 1 分 45 秒加收 80 日元
-- 夜间附加费（22:00-05:00）：20%
 
 ## 注意事项
 

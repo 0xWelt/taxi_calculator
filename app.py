@@ -70,5 +70,13 @@ def calculate_fare():
         'fare': f'{fare:,} 日元'
     })
 
-if __name__ == '__main__':
-    app.run(debug=True) 
+# 添加 Vercel 所需的处理程序
+@app.route('/api/<path:path>', methods=['GET', 'POST'])
+def api_handler(path):
+    if path == 'calculate_fare':
+        return calculate_fare()
+    return jsonify({'error': 'Not found'}), 404
+
+# 移除本地运行代码，因为 Vercel 会处理运行
+# if __name__ == '__main__':
+#     app.run(debug=True) 
