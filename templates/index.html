@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本打车费用计算器</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config.GOOGLE_MAPS_API_KEY }}&libraries=places"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>日本打车费用计算器</h1>
+        <div class="search-container">
+            <div class="input-group">
+                <label for="start">起点：</label>
+                <input type="text" id="start" placeholder="输入起点">
+            </div>
+            <div class="input-group">
+                <label for="end">终点：</label>
+                <input type="text" id="end" placeholder="输入终点">
+            </div>
+            <button id="calculate">计算费用</button>
+        </div>
+        <div id="map"></div>
+        <div id="result" class="result-container">
+            <h2>费用详情</h2>
+            <p>距离：<span id="distance">0</span> 公里</p>
+            <p>预计时间：<span id="duration">0</span> 分钟</p>
+            <p>预计费用：<span id="fare">0</span> 日元</p>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

@@ -1,0 +1,36 @@
+from flask import Flask, render_template, request, jsonify
+import os
+from dotenv import load_dotenv
+
+app = Flask(__name__)
+load_dotenv()
+
+# 配置 Google Maps API 密钥
+app.config['GOOGLE_MAPS_API_KEY'] = os.getenv('GOOGLE_MAPS_API_KEY')
+
+# 日本出租车基本费率（东京地区）
+BASE_FARE = 410  # 日元
+PER_KM_RATE = 80  # 日元/公里
+WAITING_RATE = 80  # 日元/分钟
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/calculate_fare', methods=['POST'])
+def calculate_fare():
+    data = request.get_json()
+    distance = float(data.get('distance', 0))  # 公里
+    duration = float(data.get('duration', 0))  # 分钟
+    
+    # 计算费用
+    fare = BASE_FARE + (distance * PER_KM_RATE) + (duration * WAITING_RATE)
+    
+    return jsonify({
+        'fare': round(fare),
+        'distance': round(distance, 2),
+        'duration': round(duration, 2)
+    })
+
+if __name__ == '__main__':
+    app.run(debug=True) 
