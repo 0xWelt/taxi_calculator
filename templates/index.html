@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日本打车费用计算器</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ config.GOOGLE_MAPS_API_KEY }}&libraries=places"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
 </head>
 <body>
     <div class="container">
@@ -13,13 +16,22 @@
         <div class="search-container">
             <div class="input-group">
                 <label for="start">起点：</label>
-                <input type="text" id="start" placeholder="输入起点">
+                <input type="text" id="start" placeholder="输入起点（例如：东京站）">
             </div>
             <div class="input-group">
                 <label for="end">终点：</label>
-                <input type="text" id="end" placeholder="输入终点">
+                <input type="text" id="end" placeholder="输入终点（例如：涩谷站）">
             </div>
             <button id="calculate">计算费用</button>
+            <div class="tips">
+                <p class="tip">使用提示：</p>
+                <ul>
+                    <li>请输入日本境内的具体地点名称</li>
+                    <li>建议使用日语或英语输入地点名称</li>
+                    <li>例如：东京站、涩谷站、新宿站等</li>
+                    <li>如果找不到地点，请尝试使用更具体的位置描述</li>
+                </ul>
+            </div>
         </div>
         <div id="map"></div>
         <div id="result" class="result-container">
