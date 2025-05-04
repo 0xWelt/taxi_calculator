@@ -60,15 +60,49 @@
                         <h2>计算结果</h2>
                         <div class="result-item">
                             <span>距离：</span>
-                            <span id="distance">-</span>
+                            <span id="distance" class="value">-</span>
                         </div>
                         <div class="result-item">
                             <span>时间：</span>
-                            <span id="duration">-</span>
+                            <span id="duration" class="value">-</span>
                         </div>
                         <div class="result-item">
-                            <span>费用：</span>
-                            <span id="fare">-</span>
+                            <div class="label-group">
+                                <button class="details-toggle"></button>
+                                <span>费用：</span>
+                            </div>
+                            <div class="fare-with-tooltip">
+                                <span id="fare" class="value">-</span>
+                                <div class="fare-tooltip">
+                                    <h3>计费规则</h3>
+                                    <ul>
+                                        <li>起步价：410日元（1.052公里以内）</li>
+                                        <li>每237米：80日元</li>
+                                        <li>夜间加价（22:00-05:00）：20%</li>
+                                        <li>低速行驶（10km/h以下）：每90秒80日元</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fare-details">
+                            <div class="details-content">
+                                <div class="detail-item">
+                                    <span>起步价：</span>
+                                    <span id="base-fare">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span>里程费：</span>
+                                    <span id="distance-fare">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span>低速行驶费：</span>
+                                    <span id="slow-fare">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span>夜间加价：</span>
+                                    <span id="night-surcharge">-</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

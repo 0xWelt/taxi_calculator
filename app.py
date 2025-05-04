@@ -24,7 +24,7 @@ def calculate_taxi_fare(distance_km, duration_min):
     计算出租车费用
     :param distance_km: 距离（公里）
     :param duration_min: 时间（分钟）
-    :return: 费用（日元）
+    :return: 费用明细字典
     """
     # 起步价
     base_fare = 410
@@ -32,17 +32,26 @@ def calculate_taxi_fare(distance_km, duration_min):
     # 超出起步距离的部分
     if distance_km > 1.052:
         extra_distance = distance_km - 1.052
-        extra_fare = (extra_distance * 1000 / 237) * 80
+        distance_fare = (extra_distance * 1000 / 237) * 80
     else:
-        extra_fare = 0
+        distance_fare = 0
     
-    # 等待时间费用
-    wait_fare = (duration_min / 1.75) * 80
+    # 等待时间费用（低速行驶费）
+    slow_fare = (duration_min / 1.75) * 80
+    
+    # 夜间附加费（假设当前时间为夜间）
+    night_surcharge = (base_fare + distance_fare + slow_fare) * 0.2
     
     # 总费用
-    total_fare = base_fare + extra_fare + wait_fare
+    total_fare = base_fare + distance_fare + slow_fare + night_surcharge
     
-    return round(total_fare)
+    return {
+        'base_fare': round(base_fare),
+        'distance_fare': round(distance_fare),
+        'slow_fare': round(slow_fare),
+        'night_surcharge': round(night_surcharge),
+        'total_fare': round(total_fare)
+    }
 
 @app.route('/')
 def index():
@@ -56,18 +65,22 @@ def index():
 def calculate_fare():
     """
     计算路线费用
-    :return: JSON 格式的响应，包含距离、时间和费用
+    :return: JSON 格式的响应，包含距离、时间和费用明细
     """
     data = request.get_json()
     distance = float(data['distance'])
     duration = float(data['duration'])
     
-    fare = calculate_taxi_fare(distance, duration)
+    fare_details = calculate_taxi_fare(distance, duration)
     
     return jsonify({
         'distance': f'{distance:.2f} 公里',
         'duration': f'{duration:.0f} 分钟',
-        'fare': f'{fare:,} 日元'
+        'fare': f'{fare_details["total_fare"]:,} 日元',
+        'base_fare': f'{fare_details["base_fare"]:,}',
+        'distance_fare': f'{fare_details["distance_fare"]:,}',
+        'slow_fare': f'{fare_details["slow_fare"]:,}',
+        'night_surcharge': f'{fare_details["night_surcharge"]:,}'
     })
 
 # 添加 Vercel 所需的处理程序
@@ -77,6 +90,8 @@ def api_handler(path):
         return calculate_fare()
     return jsonify({'error': 'Not found'}), 404
 
-# 移除本地运行代码，因为 Vercel 会处理运行
-# if __name__ == '__main__':
-#     app.run(debug=True) 
+# 本地运行代码
+if __name__ == '__main__':
+    print('正在启动本地服务器...')
+    print('访问地址: http://localhost:5000')
+    app.run(debug=True) 

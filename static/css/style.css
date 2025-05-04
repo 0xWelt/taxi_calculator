@@ -11,6 +11,8 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.6;
     background-color: #f5f5f5;
+    color: #333;
+    font-size: 14px;
 }
 
 /* 容器样式 */
@@ -170,8 +172,22 @@ button:hover {
 .result-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px 0;
     border-bottom: 1px solid #eee;
+    gap: 5px;
+}
+
+.result-item .label-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.result-item .value {
+    text-align: right;
+    min-width: 100px;
+    font-weight: 500;
 }
 
 .result-item:last-child {
@@ -206,6 +222,8 @@ button:hover {
     opacity: 0;
     transition: opacity 0.3s;
     margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.6;
 }
 
 .help-button:hover .tooltip {
@@ -224,6 +242,8 @@ button:hover {
     padding-left: 20px;
     margin-bottom: 8px;
     line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.6;
 }
 
 .tooltip li:last-child {
@@ -251,8 +271,10 @@ button:hover {
     padding: 8px;
     margin-bottom: 5px;
     border-radius: 4px;
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 13px;
+    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
 .log-entry:last-child {
@@ -267,4 +289,193 @@ button:hover {
 .log-entry.success {
     background-color: #e8f5e9;
     color: #2e7d32;
+}
+
+/* 费用明细样式 */
+.fare-details {
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+}
+
+.details-toggle {
+    background: none;
+    border: none;
+    color: #666;
+    padding: 0;
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.details-toggle::before {
+    content: "▶";
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.details-toggle.rotated::before {
+    transform: rotate(90deg);
+}
+
+.details-toggle:hover {
+    color: #333;
+}
+
+.details-content {
+    display: none;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+}
+
+.details-content.show {
+    display: block;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-item span {
+    font-size: 14px;
+}
+
+/* 费用提示样式 */
+.fare-with-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.fare-tooltip {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1000;
+    top: 100%;
+    right: 0;
+    background-color: #f8f9fa;
+    color: #666;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.fare-with-tooltip:hover .fare-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.fare-tooltip h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 16px;
+}
+
+.fare-tooltip ul {
+    list-style-type: none;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.fare-tooltip li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.fare-tooltip li:last-child {
+    margin-bottom: 0;
+}
+
+.fare-tooltip li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #4CAF50;
+}
+
+/* 标题样式 */
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+/* 文本样式 */
+span, p, li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* 输入框和按钮文本 */
+input, button {
+    font-size: 14px;
+    font-family: inherit;
+}
+
+/* 结果项文本 */
+.result-item span {
+    font-size: 14px;
+}
+
+/* 费用明细文本 */
+.detail-item span {
+    font-size: 14px;
+}
+
+/* 日志文本 */
+.log-entry {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* 提示框文本 */
+.tooltip, .fare-tooltip {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.tooltip li, .fare-tooltip li {
+    font-size: 13px;
+    line-height: 1.6;
 } 

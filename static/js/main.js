@@ -65,6 +65,14 @@ function initMap() {
 
     // 添加计算按钮事件监听
     document.getElementById('calculate').addEventListener('click', calculateRoute);
+
+    // 添加费用明细按钮事件监听
+    document.querySelector('.details-toggle').addEventListener('click', function() {
+        const detailsContent = document.querySelector('.details-content');
+        detailsContent.classList.toggle('show');
+        this.classList.toggle('rotated');
+    });
+
     logMessage('地图初始化完成', 'success');
 }
 
@@ -162,6 +170,12 @@ function calculateRoute() {
                 document.getElementById('distance').textContent = data.distance;
                 document.getElementById('duration').textContent = data.duration;
                 document.getElementById('fare').textContent = data.fare;
+                
+                // 更新费用明细
+                document.getElementById('base-fare').textContent = data.base_fare + ' 日元';
+                document.getElementById('distance-fare').textContent = data.distance_fare + ' 日元';
+                document.getElementById('slow-fare').textContent = data.slow_fare + ' 日元';
+                document.getElementById('night-surcharge').textContent = data.night_surcharge + ' 日元';
             })
             .catch(error => {
                 logMessage(`计算费用错误: ${error.message}`, 'error');
