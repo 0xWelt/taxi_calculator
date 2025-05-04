@@ -1,0 +1,29 @@
+[project]
+name = "japan-taxi-calculator"
+version = "0.1.0"
+description = "日本打车费用计算器"
+authors = [{name = "Your Name", email = "your@email.com"}]
+dependencies = [
+    "Flask==3.0.2",
+    "requests==2.26.0",
+    "python-dotenv==0.19.0",
+    "flask-cors==4.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort",
+    "pre-commit"
+]
+
+[tool.setuptools]
+py-modules = []
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black" 

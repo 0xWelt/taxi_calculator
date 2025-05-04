@@ -15,8 +15,6 @@
 
 这是一个基于 Web 的日本打车费用计算应用，具有交互式地图界面，可以计算任意两点之间的打车费用。
 
-> **特别说明**：本项目完全由 [Cursor](https://cursor.sh) 通过 vibe coding 生成，没有手写任何一行代码。这展示了 AI 辅助编程的强大能力。
-
 ## 快速开始
 
 ### 一键部署
@@ -39,24 +37,42 @@
    curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
 3. 创建并激活虚拟环境：
+
    ```bash
    # 创建虚拟环境
    uv venv
-   
+
    # 在 Unix/macOS 上激活虚拟环境
    source .venv/bin/activate
-   
+
    # 在 Windows 上激活虚拟环境
    .venv\Scripts\activate
    ```
-4. 使用 uv 安装依赖：
+
+4. 安装依赖（包括开发依赖）：
    ```bash
-   uv pip install -r requirements.txt
+   uv pip install -e ".[dev]"
+   # 或
+   pip install -e ".[dev]"
    ```
 5. 运行应用：
    ```bash
    python app.py
    ```
+
+### 依赖与格式化说明
+
+- 所有依赖均在 `pyproject.toml` 中统一管理
+- 主依赖：Flask、requests、python-dotenv、flask-cors
+- 开发依赖：black、isort、pre-commit
+- 依赖安装和格式化命令：
+  ```bash
+  uv pip install -e ".[dev]"
+  pre-commit install
+  pre-commit run --all-files
+  ```
+- Python 代码使用 black、isort
+- 前端代码使用 prettier
 
 ## 功能特点
 
@@ -88,12 +104,14 @@
 ## 使用说明
 
 1. 在起点和终点输入框中输入或选择地点
+
    - 支持中文、日文和英文输入
    - 输入时会自动显示相关地点建议
    - 点击建议项可快速选择
    - 例如：东京站、涩谷站、新宿站等
 
 2. 点击"计算费用"按钮
+
    - 系统会自动搜索地点
    - 在地图上显示路线
    - 计算预计费用
@@ -115,6 +133,7 @@
 ## 界面说明
 
 - 左侧面板：
+
   - 地点搜索框（带智能推荐）
   - 费用计算结果
   - 使用提示
@@ -143,4 +162,4 @@
 
 ## 许可证
 
-本项目采用 MIT 许可证 - 详情请参阅 [LICENSE](LICENSE) 文件。 
+本项目采用 MIT 许可证 - 详情请参阅 [LICENSE](LICENSE) 文件。
