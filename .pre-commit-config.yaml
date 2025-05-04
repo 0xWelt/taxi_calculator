@@ -15,3 +15,11 @@ repos:
       - id: prettier
         additional_dependencies: ['prettier@3.2.5']
         files: '\.(js|jsx|ts|tsx|css|scss|html|json|md|yml|yaml)$'
+
+  - repo: local
+    hooks:
+      - id: sync-requirements
+        name: Sync requirements.txt from pyproject.toml
+        entry: pip-compile pyproject.toml --output-file=requirements.txt
+        language: system
+        files: ^pyproject.toml$

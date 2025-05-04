@@ -74,6 +74,9 @@
 - Python 代码使用 black、isort
 - 前端代码使用 prettier
 
+> **云端部署兼容性说明**：
+> Vercel 等平台默认识别 `requirements.txt`，本项目已自动同步生成该文件，内容与 `pyproject.toml` 主依赖一致。推荐本地开发用 `pyproject.toml`，云端部署无需额外操作。
+
 ## 功能特点
 
 - 🗺️ 交互式地图界面（基于 OpenStreetMap）

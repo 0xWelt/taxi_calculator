@@ -14,7 +14,8 @@ dependencies = [
 dev = [
     "black",
     "isort",
-    "pre-commit"
+    "pre-commit",
+    "pip-tools"
 ]
 
 [tool.setuptools]
