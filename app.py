@@ -8,10 +8,37 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import os
 from dotenv import load_dotenv
+import requests
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)  # 启用 CORS 支持
 load_dotenv()
+
+# 汇率缓存
+exchange_rate = None
+exchange_rate_date = None
+
+def get_exchange_rate():
+    """
+    获取日元兑人民币汇率
+    :return: 汇率和日期
+    """
+    global exchange_rate, exchange_rate_date
+    
+    if exchange_rate is None:
+        try:
+            # 使用公开的汇率API
+            response = requests.get('https://api.exchangerate-api.com/v4/latest/JPY')
+            data = response.json()
+            exchange_rate = data['rates']['CNY']
+            # 使用API返回的更新时间
+            exchange_rate_date = data['date']
+            return exchange_rate, exchange_rate_date
+        except Exception as e:
+            print(f"获取汇率失败: {e}")
+            return 0.05, datetime.now().strftime('%Y-%m-%d')  # 使用默认汇率和当前日期
+    return exchange_rate, exchange_rate_date
 
 # 东京出租车费用计算规则
 # 起步价：410 日元（1.052 公里以内）
@@ -72,15 +99,32 @@ def calculate_fare():
     duration = float(data['duration'])
     
     fare_details = calculate_taxi_fare(distance, duration)
+    rate, rate_date = get_exchange_rate()
+    cny_fare = round(fare_details['total_fare'] * rate, 2)
     
     return jsonify({
-        'distance': f'{distance:.2f} 公里',
-        'duration': f'{duration:.0f} 分钟',
-        'fare': f'{fare_details["total_fare"]:,} 日元',
+        'distance': f'{distance:.2f} km',
+        'duration': f'{duration:.0f} min',
+        'fare': f'{fare_details["total_fare"]:,} JPY',
+        'cny_fare': f'{int(round(cny_fare)):,} CNY',
+        'exchange_rate': f'{rate:.4f}',
+        'exchange_rate_date': rate_date,
         'base_fare': f'{fare_details["base_fare"]:,}',
         'distance_fare': f'{fare_details["distance_fare"]:,}',
         'slow_fare': f'{fare_details["slow_fare"]:,}',
         'night_surcharge': f'{fare_details["night_surcharge"]:,}'
+    })
+
+@app.route('/get_exchange_rate', methods=['GET'])
+def get_exchange_rate_endpoint():
+    """
+    获取当前汇率信息
+    :return: JSON 格式的响应，包含汇率和日期
+    """
+    rate, rate_date = get_exchange_rate()
+    return jsonify({
+        'exchange_rate': f'{rate:.4f}',
+        'exchange_rate_date': rate_date
     })
 
 # 添加 Vercel 所需的处理程序
@@ -88,6 +132,8 @@ def calculate_fare():
 def api_handler(path):
     if path == 'calculate_fare':
         return calculate_fare()
+    elif path == 'get_exchange_rate':
+        return get_exchange_rate_endpoint()
     return jsonify({'error': 'Not found'}), 404
 
 # 本地运行代码

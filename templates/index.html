@@ -22,11 +22,9 @@
 
         <!-- 主要内容区域 -->
         <div class="main-content">
-            <!-- 左侧面板：搜索、计算和地图 -->
             <div class="left-panel">
-                <!-- 顶部信息区域 -->
                 <div class="top-info">
-                    <!-- 搜索区域 -->
+                    <!-- 搜索区域和结果区域 -->
                     <div class="search-container">
                         <div class="search-header">
                             <h2>路线查询</h2>
@@ -54,8 +52,6 @@
                         </div>
                         <button id="calculate">计算费用</button>
                     </div>
-
-                    <!-- 结果区域 -->
                     <div class="result-container">
                         <h2>计算结果</h2>
                         <div class="result-item">
@@ -67,19 +63,30 @@
                             <span id="duration" class="value">-</span>
                         </div>
                         <div class="result-item">
+                            <span>费用（人民币）：</span>
+                            <div class="fare-with-tooltip">
+                                <span id="cny-fare" class="value">-</span>
+                                <div class="fare-tooltip">
+                                    <h3>汇率信息</h3>
+                                    <p>汇率：<span id="exchange-rate">-</span></p>
+                                    <p>更新时间：<span id="exchange-rate-date">-</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="result-item">
                             <div class="label-group">
                                 <button class="details-toggle"></button>
-                                <span>费用：</span>
+                                <span>费用（日元）：</span>
                             </div>
                             <div class="fare-with-tooltip">
                                 <span id="fare" class="value">-</span>
                                 <div class="fare-tooltip">
                                     <h3>计费规则</h3>
                                     <ul>
-                                        <li>起步价：410日元（1.052公里以内）</li>
-                                        <li>每237米：80日元</li>
+                                        <li>起步价：410 JPY（1.052 km以内）</li>
+                                        <li>每237 m：80 JPY</li>
                                         <li>夜间加价（22:00-05:00）：20%</li>
-                                        <li>低速行驶（10km/h以下）：每90秒80日元</li>
+                                        <li>低速行驶（10 km/h以下）：每90秒80 JPY</li>
                                     </ul>
                                 </div>
                             </div>
@@ -106,15 +113,13 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- 地图区域 -->
                 <div id="map"></div>
             </div>
-
-            <!-- 右侧面板：操作日志 -->
             <div class="right-panel">
-                <h2>操作日志</h2>
-                <div id="log" class="log-container"></div>
+                <div class="right-panel-inner">
+                    <h2>操作日志</h2>
+                    <div id="log" class="log-container"></div>
+                </div>
             </div>
         </div>
     </div>

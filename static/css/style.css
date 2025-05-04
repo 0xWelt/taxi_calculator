@@ -33,6 +33,9 @@ header {
 .main-content {
     display: flex;
     gap: 20px;
+    align-items: stretch;
+    height: calc(100vh - 120px); /* 自适应浏览器高度，顶部留出空间 */
+    min-height: 600px;
 }
 
 /* 顶部信息区域样式 */
@@ -44,27 +47,37 @@ header {
 
 /* 左侧面板样式 */
 .left-panel {
-    flex: 1;
+    flex: 1 1 0;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    height: 100%;
 }
 
 /* 右侧面板样式 */
 .right-panel {
     width: 300px;
     background: white;
-    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
+    height: 100%;
+    padding: 20px 0;
+}
+
+.right-panel-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0 20px;
 }
 
 .right-panel h2 {
     margin: 0 0 15px 0;
     color: #333;
     font-size: 18px;
+    flex-shrink: 0;
 }
 
 /* 搜索区域样式 */
@@ -155,9 +168,15 @@ button:hover {
 
 /* 地图容器样式 */
 #map {
-    height: 400px;
+    height: 400px; /* 恢复地图高度，可根据需要调整 */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.left-panel, .right-panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 /* 结果容器样式 */
@@ -182,12 +201,16 @@ button:hover {
     display: flex;
     align-items: center;
     gap: 5px;
+    justify-content: flex-start;
+    flex: 1;
+    min-width: 0;
 }
 
 .result-item .value {
     text-align: right;
     min-width: 100px;
     font-weight: 500;
+    flex-shrink: 0;
 }
 
 .result-item:last-child {
@@ -259,20 +282,19 @@ button:hover {
 
 /* 日志容器样式 */
 .log-container {
-    flex: 1;
+    height: 100%;
     overflow-y: auto;
-    padding: 10px;
     background-color: #f8f9fa;
     border-radius: 4px;
-    min-height: 0; /* 确保flex布局下可以正确滚动 */
+    min-height: 0;
+    max-height: none;
+    padding: 10px;
 }
 
 .log-entry {
     padding: 8px;
     margin-bottom: 5px;
     border-radius: 4px;
-    font-size: 13px;
-    line-height: 1.5;
     font-size: 13px;
     line-height: 1.5;
 }
@@ -289,6 +311,30 @@ button:hover {
 .log-entry.success {
     background-color: #e8f5e9;
     color: #2e7d32;
+}
+
+.log-entry.error {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* 自定义滚动条样式 */
+.log-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.log-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.log-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.log-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 /* 费用明细样式 */
@@ -308,9 +354,11 @@ button:hover {
     height: 24px;
     cursor: pointer;
     transition: transform 0.3s ease;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    margin-right: 5px;
+    vertical-align: middle;
 }
 
 .details-toggle::before {
@@ -359,6 +407,8 @@ button:hover {
 .fare-with-tooltip {
     position: relative;
     cursor: help;
+    display: flex;
+    align-items: center;
 }
 
 .fare-tooltip {

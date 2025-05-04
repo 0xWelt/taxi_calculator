@@ -7,7 +7,7 @@
 
 let map;
 let control;
-const MAX_LOG_ENTRIES = 10; // 最大日志条目数
+// const MAX_LOG_ENTRIES = 10; // 最大日志条目数，已移除
 
 /**
  * 日志显示函数
@@ -23,13 +23,28 @@ function logMessage(message, type = 'info') {
     // 添加新日志条目
     logContainer.appendChild(logEntry);
     
-    // 如果超过最大条目数，移除最旧的条目
-    while (logContainer.children.length > MAX_LOG_ENTRIES) {
-        logContainer.removeChild(logContainer.firstChild);
-    }
+    // 不再自动删除老日志
+    // while (logContainer.children.length > MAX_LOG_ENTRIES) {
+    //     logContainer.removeChild(logContainer.firstChild);
+    // }
     
     // 滚动到底部
     logContainer.scrollTop = logContainer.scrollHeight;
+}
+
+/**
+ * 获取汇率信息
+ */
+async function getExchangeRate() {
+    try {
+        const response = await fetch('/get_exchange_rate');
+        const data = await response.json();
+        document.getElementById('exchange-rate').textContent = data.exchange_rate;
+        document.getElementById('exchange-rate-date').textContent = data.exchange_rate_date;
+        logMessage('汇率信息已更新', 'success');
+    } catch (error) {
+        logMessage(`获取汇率信息失败: ${error.message}`, 'error');
+    }
 }
 
 /**
@@ -72,6 +87,9 @@ function initMap() {
         detailsContent.classList.toggle('show');
         this.classList.toggle('rotated');
     });
+
+    // 获取汇率信息
+    getExchangeRate();
 
     logMessage('地图初始化完成', 'success');
 }
@@ -166,16 +184,19 @@ function calculateRoute() {
             })
             .then(response => response.json())
             .then(data => {
-                logMessage(`费用计算结果: ${data.fare} 日元`, 'success');
-                document.getElementById('distance').textContent = data.distance;
-                document.getElementById('duration').textContent = data.duration;
-                document.getElementById('fare').textContent = data.fare;
+                logMessage(`费用计算结果: ${data.fare} JPY`, 'success');
+                document.getElementById('distance').textContent = data.distance.replace('公里', ' km');
+                document.getElementById('duration').textContent = data.duration.replace('分钟', ' min');
+                document.getElementById('fare').textContent = data.fare.replace('日元', ' JPY');
+                document.getElementById('cny-fare').textContent = data.cny_fare.replace('人民币', ' CNY');
+                document.getElementById('exchange-rate').textContent = data.exchange_rate;
+                document.getElementById('exchange-rate-date').textContent = data.exchange_rate_date;
                 
                 // 更新费用明细
-                document.getElementById('base-fare').textContent = data.base_fare + ' 日元';
-                document.getElementById('distance-fare').textContent = data.distance_fare + ' 日元';
-                document.getElementById('slow-fare').textContent = data.slow_fare + ' 日元';
-                document.getElementById('night-surcharge').textContent = data.night_surcharge + ' 日元';
+                document.getElementById('base-fare').textContent = data.base_fare + ' JPY';
+                document.getElementById('distance-fare').textContent = data.distance_fare + ' JPY';
+                document.getElementById('slow-fare').textContent = data.slow_fare + ' JPY';
+                document.getElementById('night-surcharge').textContent = data.night_surcharge + ' JPY';
             })
             .catch(error => {
                 logMessage(`计算费用错误: ${error.message}`, 'error');
