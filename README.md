@@ -19,12 +19,13 @@
 
 ## 快速开始
 
-### 一键部署（推荐 Vercel）
+### 一键部署
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone)
 
-1. 点击上方按钮，登录 Vercel 并选择仓库，自动部署。
-2. 部署完成后，Vercel 会分配访问域名。
+1. 首先点击右上角的 "Fork" 按钮，将本仓库 fork 到你的账号下
+2. 点击上方 Vercel 部署按钮，登录 Vercel 并选择你 fork 的仓库，自动部署
+3. 部署完成后，Vercel 会分配访问域名
 
 ### 本地开发
 
